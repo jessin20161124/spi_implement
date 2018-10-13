@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration scan="false" scanPeriod="60000" debug="false">
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger - %msg%n</pattern>
+        </layout>
+    </appender>
+
+    <!--
+          1. 这里的com是LoggerFactory.getLogger(completeClassName)中completeClassName的前缀，那么这部分completeClassName的日志只走这个logger
+          1. logger additivity=false，则不会传递给父类展示日志，日志级别以当前logger的为准
+          2. 一旦additivity=true，如果当前没有指定appender，则当前不会输出，如果父类有则父类会输出，当前logger的作用是指定level，输出对应级别的日志，父logger的level不生效
+          3.
+    -->
+
+    <logger name="java.lang" additivity="true">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <!-- false不会传递给上一级来执行，没有appender就不输出 -->
+    <logger name="java" additivity="true" level="info">
+        <appender-ref ref="STDOUT" />
+    </logger>
+
+    <root level="error">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+</configuration>
