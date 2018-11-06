@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import java.sql.*;
 
 /**
+ * hdfs的数据节点不要重新格式化
  * 需要先把当前系统用户jessin加入到hadoop的/usr/local/hadoop-2.7.3/etc/hadoop/core-site.xml中。
  * 在/home/jessin/Downloads/apache-hive-2.3.3-bin/conf/hive-site.xml中配置用户jessin
  * 注意jessin与启动hadoop的linux 账号一样，避开一些权限问题。
@@ -12,8 +13,9 @@ import java.sql.*;
  * 1. 启动hadoop，查看9000端口是否启动：start-dfs.sh
  * 2. 启动hiveserver2，命令：hiveserver2
  * 3. 查看hive.log：tail -f /tmp/jessin/hive.log
- * 4. 使用hive命令查看hive数据：hive
- * 或者beeline -u jdbc:hive2://localhost:10000 -n jessin -p 123456789
+ * 4. 使用hive命令查看hive数据：hive 或者beeline -u jdbc:hive2://localhost:10000 -n jessin -p 123456789
+ * <p>
+ * 查看hadoop相关节点：http://localhost:50070/dfshealth.html#tab-overview
  *
  * @author zexin.guo
  * @create 2018-11-05 下午8:58
