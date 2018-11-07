@@ -40,13 +40,14 @@ public class HiveJdbcDemo {
         Statement stmt = con.createStatement();
         String tableName = "hello";
 
-//        init(stmt, tableName);
+        init(stmt, tableName);
 
+        // TODO 加查询添加也oom...
         String selectSql = "select * from " + tableName;
         LOG.info("Running: {}", selectSql);
         ResultSet selectSqlResult = stmt.executeQuery(selectSql);
         while (selectSqlResult.next()) {
-            LOG.info("{}\t{}", selectSqlResult.getString(1), selectSqlResult.getInt(2));
+            LOG.info("{}\t{}\t{}", selectSqlResult.getString(1), selectSqlResult.getInt(2), selectSqlResult.getTimestamp(3));
         }
 
         // TODO select count(*)会导致OOM..
@@ -62,7 +63,7 @@ public class HiveJdbcDemo {
         // TODO 如何设置权限
         stmt.execute("drop table if exists " + tableName);
         stmt.execute("create table " + tableName +
-                "(key String, value int)" +
+                "(key String, value int, birthday TIMESTAMP )" +
                 "row format delimited fields terminated by ',' stored as textfile");
 
         String showTableSql = "show tables '" + tableName + "'";
